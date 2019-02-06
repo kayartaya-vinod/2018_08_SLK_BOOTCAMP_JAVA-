@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" 
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+
+<script type="text/javascript"
+	src="assets/thirdparty/jquery/jquery-3.3.1.js"></script>
+	
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+
+<script>
+	// DOM ready event handler --> $(function(){});
+	$(function(){
+		// bring the cursor on a particular textbox on pageload
+		$("#username").focus();
+		$("#btn1").on("click", showFormData);
+		
+		$("#showHidePwd").on("click", function(){
+			if($(this).prop("checked")) {
+				$("#pwd").attr("type", "text");
+			}
+			else {
+				$("#pwd").attr("type", "password");
+			}
+		});
+	});
+	
+	function showFormData() {
+		var username = $("#username").val(); // getter
+		var password = $("#pwd").val(); // getter
+		var msg = "Username = " + username + "<br>";
+		msg += "Password = " + password + "<br>";
+		
+		
+		$("#output").html(msg);
+	}
+	
+	function validate() {
+		var username = $("#username").val(); // getter
+		var password = $("#pwd").val(); // getter
+		
+		if(username.trim()==="") {
+			swal("Validation failed", "Username is mandatory!", "error");
+			return false; // cancel the form submission
+		}
+		
+		if(password.trim()==="") {
+			swal("Validation failed", "Password is mandatory!", "error");
+			return false; // cancel the form submission
+		}
+		return true; 
+	}
+</script>
+</head>
+<body>
+	<h1>jQuery examples</h1>
+	<hr>
+	<h2>Working with forms</h2>
+	
+	<form action="https://vinod.co" method="POST" onsubmit="return validate()">
+		<div>
+			<input type="text" id="username" placeholder="Enter username" name="username">
+		</div>
+		<div>
+			<input type="password" id="pwd" placeholder="Enter password" name="password" >
+			<label>
+				<input type="checkbox" id="showHidePwd"> Show password
+			</label>
+		</div>
+		<div>
+			<button type="submit" id="btn1">Click me</button>
+		</div>
+	</form>
+
+	<div id="output"></div>
+
+</body>
+</html>

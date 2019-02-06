@@ -1,0 +1,69 @@
+select 
+	product_name, 
+	p.category_id, 
+	c.category_id, 
+	category_name  
+from products as p, categories as c
+where p.category_id = c.category_id;
+
+
+select product_name, p.category_id,
+	c.category_id, category_name
+from products p join categories c
+on p.category_id = c.category_id;
+
+select product_name, category_name, s.company_name
+from products p join categories c
+on p.category_id = c.category_id
+join suppliers s
+on p.supplier_id = s.supplier_id;
+
+
+select category_name, count(*) product_count
+from products join categories
+on products.category_id = categories.category_id
+group by category_name;
+
+select company_name, count(*) product_count
+from products join suppliers
+on products.supplier_id = suppliers.supplier_id
+group by company_name;
+
+
+select order_id, sum((unit_price*quantity)*(1-discount)) order_amount
+from order_details
+group by order_id
+limit 10;
+
+select od.order_id, company_name, city,
+	sum((unit_price*quantity)*(1-discount)) order_amount
+from order_details od 
+join orders o on od.order_id = o.order_id
+join customers c on o.customer_id = c.customer_id
+group by od.order_id, company_name
+order by od.order_id asc
+limit 10;
+
+
+select od.order_id, 
+	concat(company_name, ' (', c.city, ')') as customer,
+	concat(e.first_name, ' ', e.last_name) as employee,
+	sum((unit_price*quantity)*(1-discount)) order_amount
+from order_details od 
+join orders o on od.order_id = o.order_id
+join customers c on o.customer_id = c.customer_id
+join employees e on o.employee_id = e.employee_id
+group by od.order_id, company_name, e.first_name, e.last_name
+order by od.order_id asc
+limit 10;
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd">
+
+	
+	<bean name="dao1" class="com.slk.training.dao.JdbcContactsDao">
+		<!-- by default spring creates an object of this class
+		using the default no-arg constructor. However, we can ask
+		spring to use parameterized constructor while creating the bean. -->
+		
+		<!-- constructor injection -->
+		<constructor-arg value="org.h2.Driver" />
+		<constructor-arg value="jdbc:h2:tcp://localhost/~/assignment_22" />
+		<constructor-arg value="sa" />
+		<constructor-arg value="" />
+	</bean>	
+	
+	
+	<bean name="dao2" class="com.slk.training.dao.JdbcContactsDao">
+		<!-- the dependencies (fields) of this bean can also be injected
+		using "property injection".  -->
+		
+		<!-- spring invokes the setDriver(..) by passing "org.h2.Driver" as the param -->
+		<property name="driver" value="org.h2.Driver" />
+		<property name="user" value="sa" />
+		<property name="password" value="" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/assignment_22" />
+		
+	</bean>
+	
+	<bean name="dbcp,dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	
+		<!-- for each property "xyz" configured below, spring will invoke setXyz(..)
+		of the class o.a.c.d.BasicDataSource -->
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/assignment_22" />
+		
+		<property name="initialSize" value="10" />
+		<property name="maxTotal" value="100" />
+		<property name="maxWaitMillis" value="2000" />
+		<property name="maxIdle" value="50" />
+		<property name="minIdle" value="10" />
+		
+	</bean>	
+	
+	
+	<bean name="dao3" class="com.slk.training.dao.JdbcContactsDao" 
+		autowire="byName">
+		
+		<!-- manual wiring using constructor-injection -->
+		<!-- <constructor-arg ref="dbcp" /> -->
+		
+		<!-- manual wiring using property or setter injection -->
+		<!-- <property name="dataSource" ref="dbcp" /> -->
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+

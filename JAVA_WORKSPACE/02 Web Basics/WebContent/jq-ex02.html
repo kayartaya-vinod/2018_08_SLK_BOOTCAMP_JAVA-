@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript"
+	src="assets/thirdparty/jquery/jquery-3.3.1.js"></script>
+
+</head>
+<body>
+	<h1>jQuery examples </h1>
+	<hr>
+	<button id="btn1">Rotate</button>
+
+	<script>
+		function rotate() {
+			var text = $("h1").text();
+			$("h1").text(text.substring(1)).append(text.charAt(0));
+			
+			setTimeout(rotate, 250);
+		}
+
+		$("#btn1").on("click", rotate);
+		
+		
+		
+		
+	</script>
+
+
+</body>
+</html>
